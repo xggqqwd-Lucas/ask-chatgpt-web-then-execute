@@ -1,0 +1,9 @@
+# Ask ChatGPT Web, Then Execute
+
+> A Codex Agent Skill for consulting ChatGPT Web, evaluating the advice, and executing and verifying local work.
+
+- [README](https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute/blob/main/README.md): Bilingual overview, benefits, installation, requirements, and validation scope.
+- [Skill](https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute/blob/main/SKILL.md): Browser entry point, consultation workflow, and execution boundaries.
+- [Examples](https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute/blob/main/examples/workflows.md): Original debugging, simulation, research, and code-review prompts.
+
+Requires host-provided cua_repl browser tools and an accessible ChatGPT Web session. This is an Agent Skill, not a standalone browser automation service or an API client.
