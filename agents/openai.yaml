@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask ChatGPT Web, Then Execute"
+  short_description: "Consult ChatGPT Web, then execute and verify locally"
+  default_prompt: "Use $ask-chatgpt-web-then-execute to consult the signed-in ChatGPT website, evaluate its advice, and carry out the requested local work."
