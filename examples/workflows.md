@@ -42,3 +42,16 @@ implement the justified change, and run relevant checks.
 Include the consultation's main recommendation, the local evidence used to
 accept or reject it, the changes made, the checks performed, and any remaining
 uncertainty. A failed or incomplete web response is not a completed consultation.
+
+## Smoke-test the handoff
+
+```text
+Use $ask-chatgpt-web-then-execute for a harmless smoke test. Ask ChatGPT Web
+for exactly three checks before editing an unfamiliar repository, without
+sending private files or logs. Wait for the complete answer, assess it,
+finish the browser segment, then inspect the local repository instructions
+and Git state without changing project files. Report which stages passed.
+```
+
+If a particular browser, tab, or web model matters, name it in the request.
+Unavailable choices should be reported rather than silently replaced.

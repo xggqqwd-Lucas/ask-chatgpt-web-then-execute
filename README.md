@@ -31,19 +31,19 @@ Codex 的优势是把建议变成可检查的结果：先读取工作区，结�
 
 ## 安装
 
-将本仓库放到 Codex 的技能目录，文件夹名保持为 `ask-chatgpt-web-then-execute`：
+新安装按 [OpenAI 当前技能文档](https://developers.openai.com/codex/skills/) 使用用户级 `~/.agents/skills`，文件夹名保持为 `ask-chatgpt-web-then-execute`：
 
 ```bash
-git clone https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute.git ~/.codex/skills/ask-chatgpt-web-then-execute
+git clone https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute.git ~/.agents/skills/ask-chatgpt-web-then-execute
 ```
 
 Windows PowerShell：
 
 ```powershell
-git clone https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute.git "$env:USERPROFILE/.codex/skills/ask-chatgpt-web-then-execute"
+git clone https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute.git "$env:USERPROFILE/.agents/skills/ask-chatgpt-web-then-execute"
 ```
 
-已有同名技能时，先保留本地修改，再更新文件。重新开启聊天或按宿主要求刷新技能列表。
+已有同名技能时，先保留本地修改，再更新文件。若宿主已经从 `~/.codex/skills` 加载现有安装，就在该目录更新，不必同时再装一份；多个位置的同名技能可能重复显示。Codex 会自动检测技能变化；未显示更新时再重启。
 
 ## 使用
 
@@ -67,18 +67,19 @@ git clone https://github.com/xggqqwd-Lucas/ask-chatgpt-web-then-execute.git "$en
 ## 工作流程
 
 1. Codex 整理问题、必要背景和预期输出。
-2. 在内置浏览器的 ChatGPT 网页中咨询。
+2. 默认在内置浏览器的 ChatGPT 网页中咨询；遵循用户明确指定的浏览器或标签页。
 3. 等待完整回答，保留关键假设和不确定性。
-4. Codex 独立判断建议，结合实际工作区执行。
+4. Codex 独立判断建议，完成浏览器收尾后，结合实际工作区执行。
 5. 检查结果，交付产物并说明证据边界。
 
 ## 环境与兼容性
 
-- 需要能够加载 `SKILL.md` 的 Codex 环境，以及当前会话可用的 `mcp__cua_repl.js` 和内置浏览器。
+- 需要能够加载 `SKILL.md` 的 Codex 环境，以及当前会话可用的 `mcp__cua_repl.js` 和所选浏览器。默认使用内置浏览器；只有用户明确指定时才使用其他浏览器。
 - 需要能够访问 ChatGPT 网页；登录或验证由用户完成。
 - 更新后的入口使用 `cua` API，并读取工具当次返回的接口文档。不会导入缓存目录下的旧浏览器脚本。
 - 仅支持当前提供这些能力的环境，不宣称所有 Codex CLI、IDE、浏览器或版本均兼容。
-- 已在维护者环境验证内置 ChatGPT 网页打开、读取及聊天搜索；尚未完成修订版本的完整问答到本地执行测试。
+- 2026-11-12 在维护者环境通过技能结构检查，并实际完成内置 ChatGPT 网页提交无敏感内容的问题、读取完整回答、结束浏览器操作、回到本地检查项目的流程。未验证其他浏览器、文件上传、登录挑战或 Deep Research 长任务。
+- 默认保留网页当前模型；用户指定模型或模式时再选择并核实。浏览器操作中遵循实时接口文档，避免重复发送，并按当前工具要求提交 `completion_summary`。
 
 ## 数据与使用范围
 
@@ -109,7 +110,7 @@ Codex turns proposals into inspectable work: it reads the workspace, selects an 
 
 ### Install and use
 
-Clone this repository into `~/.codex/skills/ask-chatgpt-web-then-execute`, then refresh skill discovery as required by your host. Preserve local edits before replacing an existing installation.
+For new installations, clone into `~/.agents/skills/ask-chatgpt-web-then-execute`, following the [current OpenAI skill documentation](https://developers.openai.com/codex/skills/). If your host already loads an existing copy from `~/.codex/skills`, update that copy in place instead of creating duplicate skills. Preserve local edits. Codex detects changes automatically; restart if the update does not appear.
 
 ```text
 Use $ask-chatgpt-web-then-execute to ask ChatGPT Web to review the proposed fix.
@@ -120,9 +121,11 @@ See [examples/workflows.md](examples/workflows.md) for debugging, research plann
 
 ### Requirements and validation
 
-Requires a Codex host that exposes `mcp__cua_repl.js`, its `cua` API, and an in-app browser, plus access to ChatGPT Web. The skill follows live browser documentation rather than importing a cached browser runtime. Sign-in and account verification remain with the user. Availability is host-dependent; universal CLI, IDE, browser, or version compatibility is not claimed.
+Requires a Codex host that exposes `mcp__cua_repl.js`, its `cua` API, and the selected browser, plus access to ChatGPT Web. The in-app browser is the default; an explicit user browser or tab choice takes precedence. The skill follows live browser documentation rather than importing a cached browser runtime. Sign-in and account verification remain with the user. Availability is host-dependent; universal CLI, IDE, browser, or version compatibility is not claimed.
 
-The current revision has been checked for skill structure and browser navigation, page reading, and chat search in the maintainer environment. A complete consultation-to-local-execution smoke test has not yet been run for this revision.
+On 2026-11-12, skill structure validation and a live in-app browser smoke test passed in the maintainer environment: submit a non-sensitive question, observe the completed answer, finish the browser segment, and resume read-only local repository checks. Other browsers, uploads, login challenges, and long-running Deep Research were not tested.
+
+The workflow preserves the current web model unless the user requests another available model or mode, checks uncertain submissions before retrying, and follows the current browser tool completion protocol (`completion_summary`).
 
 ### Data handling
 
